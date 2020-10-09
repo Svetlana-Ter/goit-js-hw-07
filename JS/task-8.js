@@ -5,14 +5,27 @@ const refs = {
   boxes: document.querySelector('#boxes'),
 };
 
-refs.input.addEventListener('change', onInputValueRead);
+// Variant 1
+// refs.input.addEventListener('change', onInputValueRead);
 
-function onInputValueRead(event) {
+// function onInputValueRead(event) {
+//   const amount = Number(event.currentTarget.value);
+//   createBoxes(amount);
+// }
+
+// refs.renderBtn.addEventListener('click', createBoxes);
+ 
+refs.renderBtn.addEventListener('click', onInputValueRead);
+
+function onInputValueRead() {
+  refs.input.addEventListener('change', onInputValueObtain);
+}
+
+function onInputValueObtain(event) {
   const amount = Number(event.currentTarget.value);
   createBoxes(amount);
 }
 
-refs.renderBtn.addEventListener('click', createBoxes);
 
 function createBoxes(amount) {
   let newBoxes = [];
@@ -36,9 +49,10 @@ function createBoxes(amount) {
   return refs.boxes.append(...newBoxes);
 }
 
+
 refs.destroyBtn.addEventListener('click', destroyBoxes);
 
 function destroyBoxes() {
-  const divsRef = document.querySelectorAll('#boxes div');
-  refs.boxes.remove(divsRef);
+  refs.boxes.innerHTML = '';
+  refs.input.value = '';
 }
